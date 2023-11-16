@@ -1,64 +1,79 @@
 import React, { useEffect, useRef } from "react";
 import { useGLTF } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
-
+//import the model made in blender
 export function Model(props) {
   const { nodes, materials } = useGLTF("/haptic.glb");
   let eventSwitch = true;
 
-  const pin1 = useRef()
-  const pin2 = useRef()
-  const pin3 = useRef()
-  const pin4 = useRef()
-  const pin5 = useRef()
-  const pin6 = useRef()
+  const pin1 = useRef();
+  const pin2 = useRef();
+  const pin3 = useRef();
+  const pin4 = useRef();
+  const pin5 = useRef();
+  const pin6 = useRef();
 
-const cube1 = useRef() 
-const cube2 = useRef() 
-const cube3 = useRef() 
-const cube4 = useRef() 
-const cube5 = useRef() 
-const cube6 = useRef() 
-const cube7 = useRef() 
-const cube8 = useRef() 
-const cube9 = useRef() 
-const cube10 = useRef() 
-const cube11 = useRef() 
-const cube12 = useRef() 
+  const cube1 = useRef();
+  const cube2 = useRef();
+  const cube3 = useRef();
+  const cube4 = useRef();
+  const cube5 = useRef();
+  const cube6 = useRef();
+  const cube7 = useRef();
+  const cube8 = useRef();
+  const cube9 = useRef();
+  const cube10 = useRef();
+  const cube11 = useRef();
+  const cube12 = useRef();
 
-  const braillePinRefArray = [pin1,pin2,pin3,pin4,pin5,pin6]
-  const normalPinRefArray = [cube1,cube2,cube3,cube4,cube5,cube6,cube7,cube8,cube9,cube10,cube11,cube12]
+  const braillePinRefArray = [pin1, pin2, pin3, pin4, pin5, pin6];
+  const normalPinRefArray = [
+    cube1,
+    cube2,
+    cube3,
+    cube4,
+    cube5,
+    cube6,
+    cube7,
+    cube8,
+    cube9,
+    cube10,
+    cube11,
+    cube12,
+  ];
 
   let brailleArrayChoice = 0;
   let normalArrayChoice = 0;
 
-  useEffect(()=>{
-    brailleArrayChoice = Math.round(Math.random() * 5)
-    normalArrayChoice = Math.round(Math.random() * 11)
-  },[props.pinHeights])
+  useEffect(() => {
+    brailleArrayChoice = Math.round(Math.random() * 5);
+    normalArrayChoice = Math.round(Math.random() * 11);
+  }, [props.pinHeights]);
 
-  useFrame(()=> {
-
-    if(eventSwitch){
-      braillePinRefArray[brailleArrayChoice].current.scale.y += 0.001
-      normalPinRefArray[normalArrayChoice].current.scale.y += 0.001
-      if( braillePinRefArray[brailleArrayChoice].current.scale.y > 2 || normalPinRefArray[normalArrayChoice].current.scale.y > 2){
+  useFrame(() => {
+    if (eventSwitch) {
+      braillePinRefArray[brailleArrayChoice].current.scale.y += 0.001;
+      normalPinRefArray[normalArrayChoice].current.scale.y += 0.001;
+      if (
+        braillePinRefArray[brailleArrayChoice].current.scale.y > 2 ||
+        normalPinRefArray[normalArrayChoice].current.scale.y > 2
+      ) {
         eventSwitch = false;
       }
-    } 
-    
-    else{
-      braillePinRefArray[brailleArrayChoice].current.scale.y -= 0.001
-      normalPinRefArray[normalArrayChoice].current.scale.y -= 0.001
-      if( braillePinRefArray[brailleArrayChoice].current.scale.y < 0.3 || normalPinRefArray[normalArrayChoice].current.scale.y < .03){
+    } else {
+      braillePinRefArray[brailleArrayChoice].current.scale.y -= 0.001;
+      normalPinRefArray[normalArrayChoice].current.scale.y -= 0.001;
+      if (
+        braillePinRefArray[brailleArrayChoice].current.scale.y < 0.3 ||
+        normalPinRefArray[normalArrayChoice].current.scale.y < 0.03
+      ) {
         eventSwitch = true;
       }
-    }   
-  })
+    }
+  });
 
   return (
     <group {...props} dispose={null}>
-      
       <mesh
         ref={pin1}
         castShadow
@@ -69,7 +84,7 @@ const cube12 = useRef()
         scale={[1, props.pinHeights.braillePins[0], 1]}
       />
       <mesh
-       ref={pin2}
+        ref={pin2}
         castShadow
         receiveShadow
         geometry={nodes.Pin2.geometry}
@@ -78,7 +93,7 @@ const cube12 = useRef()
         scale={[1, props.pinHeights.braillePins[1], 1]}
       />
       <mesh
-       ref={pin3}
+        ref={pin3}
         castShadow
         receiveShadow
         geometry={nodes.Pin3.geometry}
@@ -87,7 +102,7 @@ const cube12 = useRef()
         scale={[1, props.pinHeights.braillePins[2], 1]}
       />
       <mesh
-       ref={pin4}
+        ref={pin4}
         castShadow
         receiveShadow
         geometry={nodes.Pin4.geometry}
@@ -95,7 +110,7 @@ const cube12 = useRef()
         position={[-1.008, 0, -0.015]}
         scale={[1, props.pinHeights.braillePins[3], 1]}
       />
-       <mesh
+      <mesh
         ref={pin5}
         castShadow
         receiveShadow
@@ -105,7 +120,7 @@ const cube12 = useRef()
         scale={[1, props.pinHeights.braillePins[4], 1]}
       />
       <mesh
-       ref={pin6}
+        ref={pin6}
         castShadow
         receiveShadow
         geometry={nodes.Pin6.geometry}
@@ -114,7 +129,7 @@ const cube12 = useRef()
         scale={[1, props.pinHeights.braillePins[5], 1]}
       />
       <mesh
-      ref={cube1}
+        ref={cube1}
         castShadow
         receiveShadow
         geometry={nodes.Cube1.geometry}
@@ -123,7 +138,7 @@ const cube12 = useRef()
         scale={[1, props.pinHeights.regularPins[0], 1]}
       />
       <mesh
-      ref={cube2}
+        ref={cube2}
         castShadow
         receiveShadow
         geometry={nodes.Cube2.geometry}
@@ -132,7 +147,7 @@ const cube12 = useRef()
         scale={[1, props.pinHeights.regularPins[1], 1]}
       />
       <mesh
-      ref={cube3}
+        ref={cube3}
         castShadow
         receiveShadow
         geometry={nodes.Cube3.geometry}
@@ -141,7 +156,7 @@ const cube12 = useRef()
         scale={[1, props.pinHeights.regularPins[2], 1]}
       />
       <mesh
-      ref={cube4}
+        ref={cube4}
         castShadow
         receiveShadow
         geometry={nodes.Cube4.geometry}
@@ -150,7 +165,7 @@ const cube12 = useRef()
         scale={[1, props.pinHeights.regularPins[3], 1]}
       />
       <mesh
-      ref={cube5}
+        ref={cube5}
         castShadow
         receiveShadow
         geometry={nodes.Cube5.geometry}
@@ -158,8 +173,8 @@ const cube12 = useRef()
         position={[0.042, 0, 1.086]}
         scale={[1, props.pinHeights.regularPins[4], 1]}
       />
-       <mesh
-       ref={cube6}
+      <mesh
+        ref={cube6}
         castShadow
         receiveShadow
         geometry={nodes.Cube6.geometry}
@@ -168,7 +183,7 @@ const cube12 = useRef()
         scale={[1, props.pinHeights.regularPins[5], 1]}
       />
       <mesh
-      ref={cube7}
+        ref={cube7}
         castShadow
         receiveShadow
         geometry={nodes.Cube7.geometry}
@@ -176,8 +191,8 @@ const cube12 = useRef()
         position={[1.972, 0, -1.026]}
         scale={[1, props.pinHeights.regularPins[6], 1]}
       />
-       <mesh
-       ref={cube8}
+      <mesh
+        ref={cube8}
         castShadow
         receiveShadow
         geometry={nodes.Cube8.geometry}
@@ -186,7 +201,7 @@ const cube12 = useRef()
         scale={[1, props.pinHeights.regularPins[7], 1]}
       />
       <mesh
-      ref={cube9}
+        ref={cube9}
         castShadow
         receiveShadow
         geometry={nodes.Cube9.geometry}
@@ -194,8 +209,8 @@ const cube12 = useRef()
         position={[-1.888, 0, -1.026]}
         scale={[1, props.pinHeights.regularPins[8], 1]}
       />
-       <mesh
-       ref={cube10}
+      <mesh
+        ref={cube10}
         castShadow
         receiveShadow
         geometry={nodes.Cube10.geometry}
@@ -204,7 +219,7 @@ const cube12 = useRef()
         scale={[1, props.pinHeights.regularPins[9], 1]}
       />
       <mesh
-      ref={cube11}
+        ref={cube11}
         castShadow
         receiveShadow
         geometry={nodes.Cube11.geometry}
@@ -213,7 +228,7 @@ const cube12 = useRef()
         scale={[1, props.pinHeights.regularPins[10], 1]}
       />
       <mesh
-      ref={cube12}
+        ref={cube12}
         castShadow
         receiveShadow
         geometry={nodes.Cube12.geometry}

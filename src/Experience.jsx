@@ -1,68 +1,83 @@
-import { Box, OrbitControls, Stage } from "@react-three/drei"
-import { Canvas, useFrame } from "@react-three/fiber"
-import { Model } from "./components/Model"
-import { useRef, useState } from "react"
-import Button from "./components/Button"
+import { Box, OrbitControls, Stage } from "@react-three/drei";
+import { Canvas, useFrame } from "@react-three/fiber";
+import { Model } from "./components/Model";
+import { useRef, useState } from "react";
+import Button from "./components/Button";
 
 const Experience = () => {
-    // set array length
-    const ARRAY_LENGTH = 6;
-    const REGULAR_PIN_COUNT = 12;
-    const BRAILLER_PIN_COUNT = 6;
+  // set array length
+  const ARRAY_LENGTH = 6;
+  const REGULAR_PIN_COUNT = 12;
+  const BRAILLER_PIN_COUNT = 6;
 
-    // create new array
-    const stateArray = Array.from({ length: ARRAY_LENGTH }).map(() => {
-        const regularPins = []
-        const braillePins = []
-
-        for (let i = 0; i < REGULAR_PIN_COUNT; i++) {
-            regularPins.push(Math.max(0.5,Math.random() * 1.3));
-        }
-
-        for (let i = 0; i < BRAILLER_PIN_COUNT; i++) {
-            braillePins.push(Math.max(0.5,Math.random() * 2.1));
-        }
-
-        return { regularPins: regularPins, braillePins: braillePins };
-
-    });
-
-    const [height, setHeight] = useState(stateArray[0])
-
-    //state update
-    const clickHandler = (index) => {
-        setHeight(stateArray[index])
+  // create new array
+  const stateArray = Array.from({ length: ARRAY_LENGTH }).map(() => {
+    const regularPins = [];
+    const braillePins = [];
+    // populate regular height of pins
+    for (let i = 0; i < REGULAR_PIN_COUNT; i++) {
+      regularPins.push(Math.max(0.5, Math.random() * 1.3));
+    }
+    //populate braille heights of pins
+    for (let i = 0; i < BRAILLER_PIN_COUNT; i++) {
+      braillePins.push(Math.max(0.5, Math.random() * 2.1));
     }
 
-    //button mapping
-    const buttonArray = Array.from({ length: ARRAY_LENGTH }).map((_,i) => {
-        return <Button key={i} onClick={()=>{clickHandler(i)}}>{i}</Button>
-    })
+    return { regularPins: regularPins, braillePins: braillePins };
+  });
 
+  const [height, setHeight] = useState(stateArray[0]);
+
+  //state update
+  const clickHandler = (index) => {
+    setHeight(stateArray[index]);
+  };
+
+  //button mapping
+  const buttonArray = Array.from({ length: ARRAY_LENGTH }).map((_, i) => {
     return (
-        <>
-        
-            <div className="buttonContainer">
-            {buttonArray}
-            </div>
+      <Button
+        key={i}
+        onClick={() => {
+          clickHandler(i);
+        }}
+      >
+        {i}
+      </Button>
+    );
+  });
 
-        <Canvas shadows gl={{ antialias: false }} dpr={[1, 1.5]} camera={{ position: [20, 15, 8], fov: 75 }}>
-            <color attach="background" args={['skyblue']} />
-            <Stage
-                intensity={0.5}
-                preset="rembrandt"
-                shadows={{
-                    type: 'contact',
-                    color: 'skyblue',
-                    opacity: 1
-                }}
-                adjustCamera={1}
-                environment="city">
-                <Model pinHeights={height}></Model>
-            </Stage>
-            <OrbitControls minPolarAngle={0} maxPolarAngle={Math.PI / 2} makeDefault />
-        </Canvas>
-        </>
-        )
-}
-export default Experience
+  return (
+    <>
+      <div className="buttonContainer">{buttonArray}</div>
+
+      <Canvas
+        shadows
+        gl={{ antialias: false }}
+        dpr={[1, 1.5]}
+        camera={{ position: [20, 15, 8], fov: 75 }}
+      >
+        <color attach="background" args={["skyblue"]} />
+        <Stage
+          intensity={0.5}
+          preset="rembrandt"
+          shadows={{
+            type: "contact",
+            color: "skyblue",
+            opacity: 1,
+          }}
+          adjustCamera={1}
+          environment="city"
+        >
+          <Model pinHeights={height}></Model>
+        </Stage>
+        <OrbitControls
+          minPolarAngle={0}
+          maxPolarAngle={Math.PI / 2}
+          makeDefault
+        />
+      </Canvas>
+    </>
+  );
+};
+export default Experience;
